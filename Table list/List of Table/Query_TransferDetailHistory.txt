@@ -1,0 +1,39 @@
+--;
+--IMPORTANT: all the comments MUST end with semicolon (as in configWizard, the parsing requires this);
+--IMPORTANT: the semicolon MUST appear & ONLY appear at the end of a comment, if it appears in the middle of a comment, the tool will not work;
+--;
+
+DROP TABLE IF EXISTS TransferDetailHistory;
+--timeFee used in transfer session;
+--serviceFee used in transfer session;
+--money used in transfer money from one user account to another;
+--transferType defined in ServerSettings.h, either to be transMoney or transSession;
+CREATE TABLE TransferDetailHistory (
+    id INTEGER primary key AUTOINCREMENT,
+    accIdFrom INTEGER,
+    accTypeFrom INTEGER,
+    accIdTo INTEGER,
+    accTypeTo INTEGER,
+    sessionIdFrom INTEGER,
+    sessionIdTo INTEGER,
+    workstationIdFrom INTEGER,
+    workstationIdTo INTEGER,
+    date INTEGER,
+    time INTEGER,
+    timeFee REAL,
+    serviceFee REAL, 
+    money REAL, 
+    transferType INTEGER, 
+    employeeId INTEGER,
+    note TEXT,
+    enabled INTEGER
+);
+CREATE INDEX IF NOT EXISTS iDate ON TransferDetailHistory(date);
+
+CREATE TABLE DbMetaData (
+    key TEXT,
+    value TEXT
+);
+
+INSERT INTO DbMetaData(key, value) VALUES('TableVersionKey',36);
+INSERT INTO DbMetaData(key, value) VALUES('ContentVersionKey', 12);

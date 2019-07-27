@@ -1,0 +1,25 @@
+
+DROP TABLE IF EXISTS WebControls;
+--dateTime: utc unix timestamp;
+--addedBy: for those from web, this is -1, otherwise this is the empl id;
+CREATE TABLE WebControls (
+    id INTEGER primary key AUTOINCREMENT, 
+    url TEXT,
+    title TEXT,
+    description TEXT,
+    dateTime INTEGER,
+    active INTEGER,
+    addedBy INTEGER,
+    enabled INTEGER
+); 
+
+CREATE INDEX IF NOT EXISTS iUrl ON WebControls(url COLLATE NOCASE);
+CREATE INDEX IF NOT EXISTS iDateTime ON WebControls(dateTime);
+
+CREATE TABLE DbMetaData (
+    key TEXT,
+    value TEXT
+);
+
+INSERT INTO DbMetaData(key, value) VALUES('TableVersionKey',36);
+INSERT INTO DbMetaData(key, value) VALUES('ContentVersionKey', 12);

@@ -1,0 +1,89 @@
+--;
+--IMPORTANT: all the comments must end with semicolon (as in configWizard, the parsing requires this);
+--IMPORTANT: the semicolon must only appear at the end of a comment, if it appears in the middle of a comment, the tool will not work;
+--;
+
+DROP TABLE IF EXISTS OrderLogs;
+--totalPrice only has value when isCustomPrice is true;
+--the date and time is the date and time when this log added. it is NOT the same as the orderItemLog's date and time, which are the date and time when items were ordered;
+CREATE TABLE OrderLogs (
+    id INTEGER primary key AUTOINCREMENT, 
+    orderId INTEGER,
+    accountId INTEGER, 
+    accountType INTEGER,
+    sessionId INTEGER, 
+    orderStatus INTEGER, 
+    payStatus INTEGER,
+    note TEXT, 
+    isCustomPrice INTEGER, 
+    totalPrice REAL, 
+    logDate INTEGER,
+    logTime INTEGER,
+    physicalDeleted INTEGER DEFAULT 0,
+    needUploading INTEGER DEFAULT 1,
+    enabled INTEGER NOT NULL DEFAULT 1
+); 
+CREATE INDEX IF NOT EXISTS iOrderLogDate ON OrderLogs(logDate);
+
+
+DROP TABLE IF EXISTS OrderItemLogs;
+--date: the date to Julian date;
+--time: the msecs to QTime(0,0,0,0);
+--productName: if we can't find product name from product table of main DB, we'll use the name in history;
+CREATE TABLE OrderItemLogs (
+    id INTEGER primary key AUTOINCREMENT, 
+    orderLogId INTEGER, 
+    productId INTEGER, 
+    productName TEXT,
+    amount INTEGER, 
+    unitPrice REAL, 
+    orderStatus INTEGER, 
+    payStatus INTEGER,
+    date INTEGER,
+    time INTEGER,
+    orderType INTEGER, 
+    note TEXT, 
+    employeeId INTEGER,
+    physicalDeleted INTEGER DEFAULT 0,
+    needUploading INTEGER DEFAULT 1,
+    enabled INTEGER NOT NULL DEFAULT 1
+); 
+
+
+-- db upgrade 23-24;
+DROP TABLE IF EXISTS ExchangeLogs;
+CREATE TABLE IF NOT EXISTS ExchangeLogs (
+    id INTEGER primary key AUTOINCREMENT, 
+    accountId INTEGER,
+    accountType INTEGER,
+    totalPoint INTEGER,
+    logDateTime INTEGER,
+    note TEXT,
+    physicalDeleted INTEGER DEFAULT 0,
+    needUploading INTEGER DEFAULT 1,
+    employeeId INTEGER
+);
+-- db upgrade 23-24;
+DROP TABLE IF EXISTS ExchangeItemLogs;
+CREATE TABLE IF NOT EXISTS ExchangeItemLogs (
+    id INTEGER primary key AUTOINCREMENT, 
+    exchangeLogId INTEGER,
+    exchangeItemId INTEGER,
+    exchangeItemType INTEGER,
+    exchangeItemName INTEGER,
+    requiredPoint INTEGER,
+    logDateTime INTEGER,
+    unitFreeMoney REAL,
+    physicalDeleted INTEGER DEFAULT 0,
+    needUploading INTEGER DEFAULT 1,
+    amount INTEGER
+);
+
+
+
+CREATE TABLE DbMetaData (
+    key TEXT,
+    value TEXT
+);
+INSERT INTO DbMetaData(key, value) VALUES('TableVersionKey',36);
+INSERT INTO DbMetaData(key, value) VALUES('ContentVersionKey', 12);

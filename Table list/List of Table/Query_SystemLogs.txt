@@ -1,0 +1,50 @@
+--;
+--IMPORTANT: all the comments must end with semicolon (as in configWizard, the parsing requires this);
+--IMPORTANT: the semicolon must only appear at the end of a comment, if it appears in the middle of a comment, the tool will not work;
+--;
+
+DROP TABLE IF EXISTS SystemLogs;
+CREATE TABLE SystemLogs(
+    id INTEGER primary key AUTOINCREMENT, 
+    workstationId INTEGER,
+    accountId INTEGER,
+    accountType INTEGER,
+    sessionId INTEGER,
+    beginDate INTEGER,
+    beginTime INTEGER,
+    endDate INTEGER,
+    endTime INTEGER,
+    status INTEGER,
+    usedMinutes INTEGER,
+    usedMoney REAL,
+    note TEXT,
+    physicalDeleted INTEGER DEFAULT 0,
+    needUploading INTEGER DEFAULT 1,
+    enabled INTEGER NOT NULL DEFAULT 1
+);
+CREATE INDEX IF NOT EXISTS iBEDate ON SystemLogs(beginDate,endDate);
+
+
+-- db upgrade 28-29;
+DROP TABLE IF EXISTS ClientStatusSumLogs;
+CREATE TABLE ClientStatusSumLogs (
+    id INTEGER primary key AUTOINCREMENT, 
+    workstationId INTEGER,
+    date INTEGER,
+    param1 INTEGER DEFAULT 0,
+    param2 INTEGER DEFAULT 0,
+    param3 INTEGER DEFAULT 0,
+    param4 INTEGER DEFAULT 0,
+    param5 INTEGER DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS iWsidDate ON ClientStatusSumLogs(workstationId,date);
+
+
+
+
+CREATE TABLE DbMetaData (
+    key TEXT,
+    value TEXT
+);
+INSERT INTO DbMetaData(key, value) VALUES('TableVersionKey',36);
+INSERT INTO DbMetaData(key, value) VALUES('ContentVersionKey', 12);

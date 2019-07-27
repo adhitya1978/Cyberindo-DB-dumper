@@ -1,0 +1,1 @@
+setup database directory first on server.ini

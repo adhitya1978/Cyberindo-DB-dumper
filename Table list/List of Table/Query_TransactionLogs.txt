@@ -1,0 +1,53 @@
+--;
+--IMPORTANT: all the comments must end with semicolon (as in configWizard, the parsing requires this);
+--IMPORTANT: the semicolon must only appear at the end of a comment, if it appears in the middle of a comment, the tool will not work;
+--;
+
+DROP TABLE IF EXISTS TransactionLogs;
+--date: the date to Julian date;
+--time: the secs to QTime(0,0,0,0);
+--param 1-8: used to store different data in different transactions, check TransactionLogCustomParams.xls for more details;
+CREATE TABLE TransactionLogs(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    workstationId INTEGER,
+    accountId INTEGER,
+    accountType INTEGER,
+    sessionId INTEGER,
+    date INTEGER,
+    time INTEGER,
+    moneyRounded REAL,
+    moneyActual REAL,
+    minutes INTEGER,
+    servicePaid INTEGER,
+    transactionType INTEGER,
+    active INTEGER,
+    transNote TEXT,
+    userNote TEXT,
+    param1 TEXT,
+    param2 TEXT,
+    param3 TEXT,
+    param4 TEXT,
+    param5 TEXT,
+    param6 TEXT,
+    param7 TEXT,
+    param8 TEXT,
+    employeeId INTEGER,
+    physicalDeleted INTEGER DEFAULT 0,
+    needUploading INTEGER DEFAULT 1,
+    enabled INTEGER NOT NULL DEFAULT 1
+);
+CREATE INDEX IF NOT EXISTS iDate ON TransactionLogs(date);
+
+
+DROP TABLE IF EXISTS UploadMetaData ;
+CREATE TABLE UploadMetaData (
+tableName TEXT 
+);
+
+CREATE TABLE DbMetaData (
+    key TEXT,
+    value TEXT
+);
+INSERT INTO DbMetaData(key, value) VALUES('TableVersionKey',36);
+INSERT INTO DbMetaData(key, value) VALUES('ContentVersionKey', 12);
+

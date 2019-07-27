@@ -1,0 +1,44 @@
+--;
+--IMPORTANT: all the comments must end with semicolon (as in configWizard, the parsing requires this);
+--IMPORTANT: the semicolon must only appear at the end of a comment, if it appears in the middle of a comment, the tool will not work;
+--;
+
+DROP TABLE IF EXISTS TopupQueueLogs;
+CREATE TABLE IF NOT EXISTS TopupQueueLogs ( 
+    id INTEGER primary key AUTOINCREMENT, 
+    topupUnitId INTEGER, 
+    workstationId INTEGER, 
+    sessionId INTEGER, 
+    priceId INTEGER, 
+    money REAL, 
+    freeMoney REAL, 
+    minutes INTEGER, 
+    topupTime INTEGER, 
+    startTime INTEGER, 
+    accountId INTEGER,
+    accountType INTEGER,
+    usedMinutes INTEGER,
+    packageId INTEGER,
+    packageName TEXT,
+    packageType INTEGER,
+    status INTEGER,
+    endType INTEGER,
+    beginTime INTEGER,
+    endTime INTEGER,
+    dayOfWeek INTEGER,
+    enabled INTEGER NOT NULL DEFAULT 1,
+    expireDT INTEGER DEFAULT -1
+);
+
+
+
+
+
+
+
+CREATE TABLE DbMetaData (
+    key TEXT,
+    value TEXT
+);
+INSERT INTO DbMetaData(key, value) VALUES('TableVersionKey',36);
+INSERT INTO DbMetaData(key, value) VALUES('ContentVersionKey', 12);

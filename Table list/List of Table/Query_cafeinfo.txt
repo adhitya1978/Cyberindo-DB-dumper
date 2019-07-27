@@ -1,0 +1,33 @@
+--;
+--IMPORTANT: all the comments must end with semicolon (as in configWizard, the parsing requires this);
+--IMPORTANT: the semicolon must only appear at the end of a comment, if it appears in the middle of a comment, the tool will not work;
+--;
+--UpdateDT: utc unix timestamp of when the cafe info has been modified;
+DROP TABLE IF EXISTS CafeInfos;
+CREATE TABLE CafeInfos (
+    id INTEGER primary key AUTOINCREMENT, 
+    GcaId INTEGER,
+    CafeName TEXT,
+    OwnerName TEXT,
+    Sex INTEGER,
+    Birthday INTEGER,
+    Phone TEXT,
+    Email TEXT,
+    NRIC TEXT,
+    Address TEXT,
+    Area TEXT,
+    District TEXT,
+    Region TEXT,
+    Country TEXT,
+    PostCode TEXT,
+    UpdateDT INTEGER,
+    UpdateBy INTEGER,
+    enabled INTEGER
+);
+
+CREATE TABLE DbMetaData (
+    key TEXT,
+    value TEXT
+);
+INSERT INTO DbMetaData(key, value) VALUES('TableVersionKey',36);
+INSERT INTO DbMetaData(key, value) VALUES('ContentVersionKey', 12);

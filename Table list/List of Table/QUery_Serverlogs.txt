@@ -1,0 +1,49 @@
+--;
+--IMPORTANT: all the comments must end with semicolon (as in configWizard, the parsing requires this);
+--IMPORTANT: the semicolon must only appear at the end of a comment, if it appears in the middle of a comment, the tool will not work;
+--;
+
+DROP TABLE IF EXISTS ServerLogs;
+CREATE TABLE ServerLogs(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    logDate INTEGER,
+    logTime INTEGER,
+    employeeId INTEGER,
+    logType INTEGER,
+    eventDate INTEGER,
+    eventTime INTEGER,
+    customCol1 TEXT,
+    customCol2 TEXT,
+    customCol3 TEXT,
+    customCol4 TEXT,
+    customCol5 TEXT,
+    customCol6 TEXT,
+    customCol7 TEXT,
+    customCol8 TEXT,
+    physicalDeleted INTEGER DEFAULT 0,
+    needUploading INTEGER DEFAULT 1,
+    note TEXT
+);
+CREATE INDEX IF NOT EXISTS iDate ON ServerLogs(logDate);
+
+-- db table 21 -> 22;
+DROP TABLE IF EXISTS EmployeeShifts;
+CREATE TABLE EmployeeShifts (
+    id INTEGER primary key AUTOINCREMENT,
+    emplId INTEGER, 
+    shiftTime INTEGER,
+    oldEndBalance REAL DEFAULT 0,
+    conflictedAmount REAL DEFAULT 0,
+    takenAmount REAL DEFAULT 0,
+    newStartBalance REAL DEFAULT 0,
+    physicalDeleted INTEGER DEFAULT 0,
+    needUploading INTEGER DEFAULT 1
+);
+
+CREATE TABLE DbMetaData (
+    key TEXT,
+    value TEXT
+);
+
+INSERT INTO DbMetaData(key, value) VALUES('TableVersionKey',36);
+INSERT INTO DbMetaData(key, value) VALUES('ContentVersionKey', 12);
